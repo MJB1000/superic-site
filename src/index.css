@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* v2 — light editorial surface, indigo signal */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 28%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 243 75% 59%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 243 75% 59%;
+
+    --radius: 0.625rem;
+
+    /* Custom tokens */
+    --terminal-black: 240 6% 7%;
+    --terminal-white: 0 0% 98%;
+    --body-text: 0 0% 28%;
+    --secondary-text: 0 0% 40%;
+    --muted-text: 0 0% 55%;
+    --signal-green: 160 84% 39%;
+    --signal-green-light: 160 73% 52%;
+    --signal-green-deep: 160 90% 30%;
+    --signal-orange: 24 95% 53%;
+    --signal-orange-light: 30 100% 62%;
+    --surface: 0 0% 100%;
+    --surface-border: 0 0% 90%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 40%;
+    --sidebar-primary: 243 75% 59%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 243 75% 59%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans tracking-tight text-foreground;
+  }
+}
+
+@layer components {
+  .text-body {
+    @apply text-secondary-text;
+  }
+
+  .text-meta {
+    @apply font-mono text-muted-text text-xs;
+  }
+
+  /* Mono, uppercase, wide — the reference site's label voice */
+  .label-mono {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em] text-muted-text;
+  }
+
+  .green-glow {
+    background: radial-gradient(circle, hsl(var(--primary) / 0.07) 0%, transparent 70%);
+  }
+
+  .grid-overlay {
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Inverted band used for the matrix hero so the animation still reads */
+  .panel-dark {
+    background-color: hsl(var(--terminal-black));
+    color: hsl(var(--terminal-white));
+  }
+
+  /* --- Light/dark seam blending -----------------------------------------
+   * Dark plates fade into the page white (and vice versa) instead of
+   * butting up against a hard edge. Parent needs `relative isolate`.
+   *
+   * The alpha ramps below are eased (smoothstep-ish) rather than linear:
+   * a linear alpha ramp over black reads as a flat grey haze with a visible
+   * band, while an eased ramp stays invisible and reaches the seam solid.
+   */
+  .blend-top::before,
+  .blend-bottom::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 160px;
+    pointer-events: none;
+    z-index: 25;
+  }
+
+  .blend-top::before {
+    top: 0;
+    background: linear-gradient(
+      to bottom,
+      hsl(var(--background)) 0%,
+      hsl(var(--background) / 0.985) 10%,
+      hsl(var(--background) / 0.93) 22%,
+      hsl(var(--background) / 0.82) 34%,
+      hsl(var(--background) / 0.65) 46%,
+      hsl(var(--background) / 0.45) 58%,
+      hsl(var(--background) / 0.26) 70%,
+      hsl(var(--background) / 0.12) 82%,
+      hsl(var(--background) / 0.04) 91%,
+      transparent 100%
+    );
+  }
+
+  .blend-bottom::after {
+    bottom: 0;
+    background: linear-gradient(
+      to top,
+      hsl(var(--background)) 0%,
+      hsl(var(--background) / 0.985) 10%,
+      hsl(var(--background) / 0.93) 22%,
+      hsl(var(--background) / 0.82) 34%,
+      hsl(var(--background) / 0.65) 46%,
+      hsl(var(--background) / 0.45) 58%,
+      hsl(var(--background) / 0.26) 70%,
+      hsl(var(--background) / 0.12) 82%,
+      hsl(var(--background) / 0.04) 91%,
+      transparent 100%
+    );
+  }
+
+  /* Pixel dissolve: a short checkerboard strip riding the seam so the
+   * crossfade reads as an 8-bit dither rather than an airbrushed gradient.
+   */
+
+
+
+  .blend-dither-top::after,
+  .blend-dither-bottom::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 24px;
+    pointer-events: none;
+    z-index: 26;
+    background-image: repeating-conic-gradient(
+      hsl(var(--background)) 0% 25%,
+      transparent 0% 50%
+    );
+    background-size: 4px 4px;
+  }
+
+  .blend-dither-top::after {
+    top: 96px;
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+  }
+
+  .blend-dither-bottom::before {
+    bottom: 96px;
+    -webkit-mask-image: linear-gradient(to top, #000, transparent);
+    mask-image: linear-gradient(to top, #000, transparent);
+  }
+
+  /* Light section that sits under a dark plate: pull the black down into it. */
+  .blend-dark-top {
+    position: relative;
+  }
+
+  .blend-dark-top::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 140px;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      hsl(var(--terminal-black) / 0.5) 0%,
+      hsl(var(--terminal-black) / 0.34) 18%,
+      hsl(var(--terminal-black) / 0.2) 34%,
+      hsl(var(--terminal-black) / 0.1) 52%,
+      hsl(var(--terminal-black) / 0.04) 72%,
+      transparent 100%
+    );
+  }
+
+  .blend-dark-bottom::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 140px;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      hsl(var(--terminal-black) / 0.85) 0%,
+      hsl(var(--terminal-black) / 0.62) 16%,
+      hsl(var(--terminal-black) / 0.4) 32%,
+      hsl(var(--terminal-black) / 0.22) 50%,
+      hsl(var(--terminal-black) / 0.08) 72%,
+      transparent 100%
+    );
+  }
+
+
+  /* 8-bit corner ticks that appear on hover — pure CSS, crisp edges. */
+  .bit-corners {
+    position: relative;
+  }
+
+  .bit-corners::before,
+  .bit-corners::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    opacity: 0;
+    transition: opacity 160ms steps(2, end);
+    pointer-events: none;
+  }
+
+  .bit-corners::before {
+    top: -3px;
+    left: -3px;
+    border-top: 2px solid hsl(var(--signal-green));
+    border-left: 2px solid hsl(var(--signal-green));
+  }
+
+  .bit-corners::after {
+    bottom: -3px;
+    right: -3px;
+    border-bottom: 2px solid hsl(var(--signal-green));
+    border-right: 2px solid hsl(var(--signal-green));
+  }
+
+  .bit-corners:hover::before,
+  .bit-corners:hover::after {
+    opacity: 1;
+  }
+
+  /* Faint ordered-dither texture for light sections. */
+  .bit-dither {
+    background-image: radial-gradient(
+      hsl(var(--signal-green) / 0.09) 0.5px,
+      transparent 0.5px
+    );
+    background-size: 4px 4px;
+  }
+
+  .marker-highlight {
+    background: hsl(var(--primary) / 0.14);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 0.1em 0.28em;
+    border-radius: 0.25em;
+  }
+
+  /* Local terminal palette: other pages keep their existing theme. */
+  .homepage-lab {
+    --background: var(--terminal-black);
+    --foreground: var(--terminal-white);
+    --card: 240 6% 10%;
+    --card-foreground: var(--terminal-white);
+    --primary: var(--signal-green-light);
+    --primary-foreground: var(--terminal-black);
+    --border: 240 5% 22%;
+    --input: 240 5% 22%;
+    --ring: var(--signal-green-light);
+    --muted: 240 6% 14%;
+    --muted-foreground: 0 0% 65%;
+    --secondary-text: 0 0% 74%;
+    --muted-text: 0 0% 60%;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      hsl(var(--terminal-white) / 0.015) 3px,
+      hsl(var(--terminal-white) / 0.015) 4px
+    );
+  }
+
+}
+
+@layer utilities {
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
+}
