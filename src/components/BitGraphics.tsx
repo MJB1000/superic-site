@@ -1,10 +1,8 @@
-/* BitGraphics — 8-bit "night drive" accents that echo the CRT hero.
+/* BitGraphics — 8-bit "night drive" accents (pixel hills, road, rules, steps).
  * All SVG, crispEdges-rendered, brand-green phosphor palette.
  * Designed to sit *inside* sections as texture and typographic marks,
  * not as full-bleed dark bands between light sections.
  */
-import type { CSSProperties } from "react";
-
 const G = "hsl(160 84% 39%)"; // signal-green
 const GL = "hsl(160 73% 52%)"; // signal-green-light
 const GD = "hsl(160 90% 30%)"; // signal-green-deep
@@ -153,68 +151,3 @@ export function PixelStep({ n }: { n: string }) {
     </span>
   );
 }
-
-/* Inline pixel arrow — a signpost mark that lives next to a link. */
-export function PixelArrow({
-  dir = "right",
-  color = G,
-  size = 10,
-}: {
-  dir?: "left" | "right";
-  color?: string;
-  size?: number;
-}) {
-  const pts = dir === "left" ? "8,0 8,12 0,6" : "0,0 0,12 8,6";
-  return (
-    <svg
-      width={size}
-      height={(size * 12) / 8}
-      viewBox="0 0 8 12"
-      shapeRendering="crispEdges"
-      style={{ display: "block", imageRendering: "pixelated", flexShrink: 0 }}
-      aria-hidden
-    >
-      <polygon points={pts} fill={color} />
-    </svg>
-  );
-}
-
-/* Ordered dithering overlay — faint CRT texture for light sections. */
-export function PixelDither({ className = "", style }: { className?: string; style?: CSSProperties }) {
-  return (
-    <div
-      className={className}
-      aria-hidden
-      style={{
-        position: "absolute",
-        inset: 0,
-        pointerEvents: "none",
-        backgroundImage:
-          "radial-gradient(hsl(160 84% 39% / 0.10) 0.5px, transparent 0.5px)",
-        backgroundSize: "4px 4px",
-        ...style,
-      }}
-    />
-  );
-}
-
-/* Pixel corner brackets — L-shaped ticks, subtler than solid blocks. */
-export function PixelCorners({ color = G, size = 6 }: { color?: string; size?: number }) {
-  const arm: CSSProperties = { position: "absolute", background: color, imageRendering: "pixelated" };
-  const h = { ...arm, width: size, height: 2 };
-  const v = { ...arm, width: 2, height: size };
-  return (
-    <>
-      <span style={{ ...h, top: -2, left: -2 }} />
-      <span style={{ ...v, top: -2, left: -2 }} />
-      <span style={{ ...h, top: -2, right: -2 }} />
-      <span style={{ ...v, top: -2, right: -2 }} />
-      <span style={{ ...h, bottom: -2, left: -2 }} />
-      <span style={{ ...v, bottom: -2, left: -2 }} />
-      <span style={{ ...h, bottom: -2, right: -2 }} />
-      <span style={{ ...v, bottom: -2, right: -2 }} />
-    </>
-  );
-}
-
-export { G as BIT_GREEN, GL as BIT_GREEN_LIGHT, GD as BIT_GREEN_DEEP };

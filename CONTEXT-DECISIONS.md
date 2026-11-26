@@ -13,15 +13,16 @@ These come from the project's own instructions file (`AGENTS.md`) and the
 workspace rules that govern this project.
 
 **From `AGENTS.md`:**
-- Render the community homepage from `src/pages/Index.tsx` at `/`, preserving the
-  alternate homepage routes so existing variants remain accessible.
+- Render the community homepage from `src/pages/Index.tsx` at `/`. It is the only
+  homepage — the alternate variants were removed on 2026-11-26 (see section 6).
 - Keep homepage build summaries in `src/lib/builds.ts`, separate from the Projects
   catalogue so community positioning does not replace existing projects.
 - Reuse the existing newsletter subscription transport for homepage waitlists;
   configurable labels distinguish their purpose without introducing another service.
 
 **From workspace rules:**
-- `/` renders `src/pages/Index.tsx`; alternate homepage routes stay accessible.
+- `/` renders `src/pages/Index.tsx`. *(Superseded 2026-11-26: the former rule to
+  keep alternate homepage routes accessible no longer applies — see section 6.)*
 - Homepage build summaries stay in `src/lib/builds.ts`, separate from the Projects
   catalogue.
 - Homepage waitlists reuse the existing newsletter subscription transport.
@@ -69,6 +70,8 @@ workspace rules that govern this project.
   Australian brands".
 - `MatrixHeader` is no longer used for the homepage hero; its unused
   heading/highlight additions were reverted. `IndexVariant.tsx` output unchanged.
+  *(2026-11-26: `IndexVariant.tsx` has since been deleted; the hero in
+  `src/pages/Index.tsx` is now the single source of truth.)*
 - Sections below the hero reframed as an approachable AI lab for people who
   already know a bit about AI: kickers `// in the lab`, `// coming soon`,
   `// open lab`, `// field notes`, `// good reads`; cards styled as experiment log
@@ -116,3 +119,15 @@ workspace rules that govern this project.
 - Desktop and mobile preview checks showed no horizontal overflow and no browser
   errors after the hero restore.
 - Newsletter delivery itself was not tested.
+
+---
+
+## 6. Post-export rebuild decisions (2026-11-26)
+- The project left Lovable. Lovable tooling was removed; `bun.lock` is the only
+  lockfile; hosting target is Vercel (per the original `BEEHIIV-SETUP.md` plan).
+- Alternate homepage variants removed at the owner's request: routes `/v3`
+  (duplicate of `/`), `/v4` (`IndexCRT.tsx`, CRT "night drive" hero) and
+  `/v4-matrix` (`IndexVariant.tsx`). Code used only by them was deleted too:
+  `src/lib/crt-drive.js`, `src/lib/crt-static.js`, `src/components/BitSprites.tsx`
+  and the unused `PixelArrow` / `PixelDither` / `PixelCorners` exports of
+  `BitGraphics.tsx`. Both pages remain recoverable from the baseline commit.

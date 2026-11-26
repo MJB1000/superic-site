@@ -6,8 +6,6 @@ import TopNav from "@/components/TopNav";
 import SideNav from "@/components/SideNav";
 import Footer from "@/components/Footer";
 import Index from "./pages/Index";
-import IndexVariant from "./pages/IndexVariant";
-import IndexCRT from "./pages/IndexCRT";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import CategoryPage from "./pages/CategoryPage";
@@ -32,9 +30,6 @@ const App = () => (
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/v4" element={<IndexCRT />} />
-                <Route path="/v4-matrix" element={<IndexVariant />} />
-                <Route path="/v3" element={<Index />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/category/:slug" element={<CategoryPage />} />
