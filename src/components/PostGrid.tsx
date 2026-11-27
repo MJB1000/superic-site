@@ -1,7 +1,8 @@
 import PostCard from "./PostCard";
+import type { PostSummary } from "@/lib/sanity";
 
 interface PostGridProps {
-  posts: any[];
+  posts: PostSummary[];
 }
 
 export default function PostGrid({ posts }: PostGridProps) {

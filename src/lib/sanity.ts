@@ -10,10 +10,41 @@ export const sanityClient = createClient({
 
 const builder = imageUrlBuilder(sanityClient);
 
-type SanityImageSource = Parameters<ReturnType<typeof imageUrlBuilder>["image"]>[0];
+export type SanityImageSource = Parameters<ReturnType<typeof imageUrlBuilder>["image"]>[0];
 
 export function urlFor(source: SanityImageSource) {
   return builder.image(source);
+}
+
+// ── Shapes returned by the queries below ─────────────────────────────────────
+
+export interface Category {
+  _id?: string;
+  title: string;
+  slug: string;
+  color: string;
+  description?: string;
+}
+
+export interface Author {
+  name?: string;
+  avatar?: SanityImageSource;
+  role?: string;
+  bio?: string;
+  social?: { twitter?: string; linkedin?: string };
+}
+
+/** A post as listed in feeds (latestPosts, featuredPosts, postsByCategory). */
+export interface PostSummary {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  publishedAt: string;
+  heroImage?: SanityImageSource;
+  entryAnimation?: string;
+  categories?: Category[];
+  author?: Author;
 }
 
 // GROQ Queries

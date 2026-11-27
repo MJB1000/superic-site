@@ -1,5 +1,6 @@
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import NewsletterForm from "./NewsletterForm";
+import type { ComponentProps } from "react";
 
 const components: PortableTextComponents = {
   block: {
@@ -134,7 +135,7 @@ const components: PortableTextComponents = {
           {value.body || "One insight, one system, one link. Every Tuesday."}
         </p>
         <div className="mx-auto max-w-sm">
-          <NewsletterForm compact />
+          <NewsletterForm compact source="post" />
         </div>
       </div>
     ),
@@ -142,7 +143,7 @@ const components: PortableTextComponents = {
 };
 
 interface PortableTextRendererProps {
-  content: any[];
+  content: ComponentProps<typeof PortableText>["value"];
 }
 
 export default function PortableTextRenderer({ content }: PortableTextRendererProps) {

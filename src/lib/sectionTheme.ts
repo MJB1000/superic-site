@@ -17,9 +17,6 @@ export const sectionAccents: Record<SectionKey, { hsl: string; hex: string; labe
 // the section accent without rewriting components.
 export function sectionStyle(key: SectionKey): React.CSSProperties {
   const { hsl } = sectionAccents[key];
-  return {
-    ["--primary" as any]: hsl,
-    ["--ring" as any]: hsl,
-    ["--accent" as any]: hsl,
-  };
+  // CSS custom properties aren't in React.CSSProperties; the cast is the standard workaround.
+  return { "--primary": hsl, "--ring": hsl, "--accent": hsl } as React.CSSProperties;
 }

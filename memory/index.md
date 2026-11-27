@@ -1,9 +1,9 @@
 # Project Memory
 
 ## Core
-v2 design: LIGHT theme (#fafafa) with indigo #4F46E5 accent, top nav (no sidebar), mono uppercase labels. Ref: aiwithremy.com.
+v2 design: LIGHT theme (#fafafa) with indigo #4F46E5 accent, left sidebar nav on desktop (SideNav, md+) / sticky top bar on mobile (TopNav), mono uppercase labels. Ref: aiwithremy.com.
 Inter for text, JetBrains Mono for labels/code. Matrix rain lives in a dark hero band on the homepage (user-approved).
-React (Vite), Tailwind, Sanity CMS (qs95bq7w). No legacy GitHub API.
+React (Vite), Tailwind, Sanity CMS (qs95bq7w), hosted on Vercel (left Lovable 2026-11-26). No legacy GitHub API.
 Tone is direct, operator-driven ("Super Eye See (IC)"). Zero "AI" fluff.
 
 

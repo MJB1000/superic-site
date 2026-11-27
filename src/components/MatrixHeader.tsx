@@ -34,7 +34,7 @@ export default function MatrixHeader({
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    const rain = new (MatrixRain as any)(canvasRef.current, {
+    const rain = new MatrixRain(canvasRef.current, {
       theme,
       glyphSet,
       speed,
@@ -82,7 +82,7 @@ export default function MatrixHeader({
           style={{
             fontSize: "clamp(36px, 5.4vw, 68px)",
             textShadow: "0 2px 40px rgba(0,0,0,.85)",
-            textWrap: "balance" as any,
+            textWrap: "balance",
           }}
         >
           {title}{" "}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import CategoryBadge from "./CategoryBadge";
-import { urlFor } from "@/lib/sanity";
+import { urlFor, type PostSummary } from "@/lib/sanity";
 
 function estimateReadingTime(excerpt?: string): string {
   const words = excerpt ? excerpt.split(/\s+/).length : 0;
@@ -10,16 +10,7 @@ function estimateReadingTime(excerpt?: string): string {
 }
 
 interface PostCardProps {
-  post: {
-    _id: string;
-    title: string;
-    slug: string;
-    excerpt?: string;
-    publishedAt: string;
-    heroImage?: any;
-    categories?: { title: string; slug: string; color: string }[];
-    author?: { name?: string; avatar?: any };
-  };
+  post: PostSummary;
   variant?: "feed" | "grid";
 }
 

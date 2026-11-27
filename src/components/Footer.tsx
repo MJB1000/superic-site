@@ -19,7 +19,7 @@ export default function Footer() {
               One email a week: what I tested, what worked, and how to try it yourself.
             </p>
             <div className="max-w-md">
-              <NewsletterForm compact />
+              <NewsletterForm compact source="footer" />
             </div>
           </div>
           <div className="md:max-w-[280px] md:justify-self-end">
