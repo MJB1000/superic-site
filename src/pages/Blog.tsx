@@ -9,6 +9,7 @@ import Kicker from "@/components/Kicker";
 import HandUnderline from "@/components/HandUnderline";
 import { PixelRule } from "@/components/BitGraphics";
 import { sectionStyle } from "@/lib/sectionTheme";
+import type { PostSummary } from "@/lib/sanity";
 
 export default function Blog() {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,7 @@ export default function Blog() {
           </div>
         ) : (
           <div>
-            {(allPosts || []).map((post: any) => (
+            {(allPosts || []).map((post: PostSummary) => (
               <PostCard key={post._id} post={post} />
             ))}
           </div>

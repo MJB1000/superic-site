@@ -1,16 +1,7 @@
-import { urlFor } from "@/lib/sanity";
+import { urlFor, type Author } from "@/lib/sanity";
 
 interface AuthorCardProps {
-  author: {
-    name: string;
-    avatar?: any;
-    role?: string;
-    bio?: string;
-    social?: {
-      twitter?: string;
-      linkedin?: string;
-    };
-  };
+  author: Author & { name: string };
 }
 
 export default function AuthorCard({ author }: AuthorCardProps) {

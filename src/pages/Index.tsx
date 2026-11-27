@@ -21,7 +21,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    const rain = new (MatrixRain as any)(canvasRef.current, {
+    const rain = new MatrixRain(canvasRef.current, {
       theme: "green",
       glyphSet: "mixed",
       speed: 1.5,
@@ -89,7 +89,7 @@ export default function Index() {
                   animationFillMode: "both",
                   color: "hsl(var(--signal-green-light))",
                   textShadow: "0 0 60px hsl(var(--signal-green) / 0.45), 0 4px 40px rgba(0,0,0,.8)",
-                  textWrap: "balance" as any,
+                  textWrap: "balance",
                 }}
               >
                 {w}

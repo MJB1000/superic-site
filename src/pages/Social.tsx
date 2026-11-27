@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Instagram, ExternalLink, Film, Images, Image as ImageIcon, FileText } from "lucide-react";
+import { Instagram, ExternalLink, Film, Images, Image as ImageIcon, FileText, type LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import SEOHead from "@/components/SEOHead";
@@ -8,7 +8,7 @@ import { sectionStyle } from "@/lib/sectionTheme";
 import { sanityClient, queries } from "@/lib/sanity";
 import { socialPosts, INSTAGRAM_URL, INSTAGRAM_HANDLE, type SocialItem } from "@/lib/social";
 
-const formatMeta: Record<string, { label: string; icon: any }> = {
+const formatMeta: Record<string, { label: string; icon: LucideIcon }> = {
   reel: { label: "Reel", icon: Film },
   carousel: { label: "Carousel", icon: Images },
   post: { label: "Post", icon: ImageIcon },

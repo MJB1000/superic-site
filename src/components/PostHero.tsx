@@ -41,7 +41,7 @@ export default function PostHero({
     let cleanup: (() => void) | undefined;
 
     if (animation === "matrix") {
-      const rain = new (MatrixRain as any)(canvas, {
+      const rain = new MatrixRain(canvas, {
         theme: "green",
         glyphSet: "mixed",
         speed: 0.85,
@@ -124,7 +124,7 @@ export default function PostHero({
           style={{
             fontSize: "clamp(34px, 5.2vw, 68px)",
             textShadow: "0 2px 44px rgba(0,0,0,.9)",
-            textWrap: "balance" as any,
+            textWrap: "balance",
           }}
         >
           {title}

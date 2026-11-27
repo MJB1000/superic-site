@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { sanityClient, queries, urlFor } from "@/lib/sanity";
+import { sanityClient, queries, urlFor, type Category, type PostSummary } from "@/lib/sanity";
 import { format } from "date-fns";
 import { useEffect, useRef } from "react";
 import SEOHead from "@/components/SEOHead";
@@ -101,7 +101,7 @@ export default function BlogPost() {
         {/* Title + meta strip (re-stated for in-article context) */}
         <header ref={titleRef} className="mb-10" style={{ opacity: 0 }}>
           <div className="mb-4 flex flex-wrap items-center gap-2">
-            {post.categories?.map((cat: any) => (
+            {post.categories?.map((cat: Category) => (
               <CategoryBadge key={cat.slug} title={cat.title} slug={cat.slug} color={cat.color} />
             ))}
           </div>
@@ -160,7 +160,7 @@ export default function BlogPost() {
             More like this
           </h2>
           <div>
-            {relatedPosts.map((p: any) => (
+            {relatedPosts.map((p: PostSummary) => (
               <PostCard key={p._id} post={p} />
             ))}
           </div>
