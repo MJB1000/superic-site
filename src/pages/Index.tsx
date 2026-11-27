@@ -103,7 +103,7 @@ export default function Index() {
               down while it's still messy. Copy it, break it, make it yours.
             </p>
             <div className="mt-6 max-w-[420px]">
-              <NewsletterForm />
+              <NewsletterForm source="hero" />
               <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-terminal-white/55">
                 one email a week, nothing gated
               </p>
@@ -158,7 +158,7 @@ export default function Index() {
             <div>
               <p className="mb-5 text-base leading-relaxed text-secondary-text">We're turning these experiments into hands-on walkthroughs, so you can rebuild them for your own brand step by step.</p>
               <p className="mb-4 text-sm text-secondary-text">Join the waitlist for training updates through our existing email list.</p>
-              <NewsletterForm buttonLabel="Join the waitlist" emailLabel="Email address for training updates" />
+              <NewsletterForm source="training" buttonLabel="Join the waitlist" emailLabel="Email address for training updates" />
             </div>
           </div>
         </section>
@@ -174,7 +174,7 @@ export default function Index() {
           <div>
             <p className="mb-5 text-base leading-relaxed text-terminal-white/75">Bring your own experiments. We're a group of Australian e-commerce operators sharing what we're testing, what broke and what worked, and helping each other get unstuck.</p>
             <p className="mb-4 text-sm text-terminal-white/65">Join the community waitlist through our existing email list.</p>
-            <NewsletterForm buttonLabel="Join the lab" emailLabel="Email address for the community waitlist" />
+            <NewsletterForm source="community" buttonLabel="Join the lab" emailLabel="Email address for the community waitlist" />
           </div>
         </div>
       </section>

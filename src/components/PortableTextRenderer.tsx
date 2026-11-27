@@ -134,7 +134,7 @@ const components: PortableTextComponents = {
           {value.body || "One insight, one system, one link. Every Tuesday."}
         </p>
         <div className="mx-auto max-w-sm">
-          <NewsletterForm compact />
+          <NewsletterForm compact source="post" />
         </div>
       </div>
     ),

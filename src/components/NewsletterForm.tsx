@@ -1,34 +1,50 @@
 import { useId, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 
+/** Where a form sits. Sent to Beehiiv as utm_campaign so signups can be told apart. */
+export type SignupSource = "hero" | "training" | "community" | "footer" | "post" | "newsletter";
+
 interface NewsletterFormProps {
   compact?: boolean;
   buttonLabel?: string;
   emailLabel?: string;
+  source: SignupSource;
 }
 
-export default function NewsletterForm({ compact, buttonLabel = "Subscribe", emailLabel = "Email address" }: NewsletterFormProps) {
+type Status = "idle" | "loading" | "success" | "invalid" | "error";
+
+/**
+ * Every signup form posts here. /api/subscribe holds the Beehiiv key
+ * server-side (api/subscribe.ts) — the browser never talks to Beehiiv.
+ */
+export default function NewsletterForm({
+  compact,
+  buttonLabel = "Subscribe",
+  emailLabel = "Email address",
+  source,
+}: NewsletterFormProps) {
   const emailId = useId();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [company, setCompany] = useState(""); // honeypot — real people never see it
+  const [status, setStatus] = useState<Status>("idle");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || status === "loading") return;
     setStatus("loading");
 
     try {
-      const res = await fetch(
-        "https://api.beehiiv.com/v2/publications/pub_8115cd79-d2a8-48ff-a97b-2ca6b47b9ac1/subscriptions",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, utm_source: "website" }),
-        }
-      );
-      if (!res.ok) throw new Error();
-      setStatus("success");
-      setEmail("");
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source, company }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus(res.status === 400 ? "invalid" : "error");
+      }
     } catch {
       setStatus("error");
     }
@@ -36,7 +52,7 @@ export default function NewsletterForm({ compact, buttonLabel = "Subscribe", ema
 
   if (status === "success") {
     return (
-      <p className="font-mono text-sm text-primary">
+      <p role="status" className="font-mono text-sm text-primary">
         You're in — see you in your inbox.
       </p>
     );
@@ -44,6 +60,19 @@ export default function NewsletterForm({ compact, buttonLabel = "Subscribe", ema
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-wrap gap-2">
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label>
+          Company
+          <input
+            type="text"
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
+        </label>
+      </div>
       <label htmlFor={emailId} className="sr-only">{emailLabel}</label>
       <input
         id={emailId}
@@ -65,6 +94,9 @@ export default function NewsletterForm({ compact, buttonLabel = "Subscribe", ema
       >
         {status === "loading" ? "Sending…" : buttonLabel}
       </Button>
+      {status === "invalid" && (
+        <p role="alert" className="mt-2 w-full font-mono text-xs text-destructive">That email doesn't look right — check it and try again.</p>
+      )}
       {status === "error" && (
         <p role="alert" className="mt-2 w-full font-mono text-xs text-destructive">Something went wrong. Try again.</p>
       )}

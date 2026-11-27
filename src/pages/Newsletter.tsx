@@ -25,7 +25,7 @@ Learn AI marketing<br />with me
         </p>
 
         <div className="mx-auto max-w-[420px]">
-          <NewsletterForm />
+          <NewsletterForm source="newsletter" />
           <p className="mt-4 font-mono text-[11px] text-muted-text">
             Sent every Tuesday — unsubscribe anytime
           </p>
