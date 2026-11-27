@@ -44,6 +44,17 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Long-lived vendor chunks: they change rarely, so browsers keep them cached across deploys.
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          sanity: ["@sanity/client", "@sanity/image-url"],
+        },
+      },
+    },
+  },
   plugins: [react(), devSubscribeApi(loadEnv(mode, process.cwd(), ""))],
   resolve: {
     alias: {
